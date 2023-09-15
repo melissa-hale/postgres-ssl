@@ -3,6 +3,9 @@
 whoami
 ls -ld /var/lib/postgresql/
 
+# Grant permissions to postgres
+chown postgres:postgres /var/lib/postgresql/
+
 SSL_DIR="/var/lib/postgresql/certs"
 mkdir -p "$SSL_DIR"
 
