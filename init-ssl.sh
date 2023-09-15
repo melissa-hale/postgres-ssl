@@ -1,5 +1,8 @@
 #!/bin/bash
 
+whoami
+ls -ld /var/lib/postgresql/
+
 SSL_DIR="/var/lib/postgresql/certs"
 mkdir -p "$SSL_DIR"
 
