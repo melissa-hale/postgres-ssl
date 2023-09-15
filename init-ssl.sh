@@ -1,10 +1,15 @@
 #!/bin/bash
 
 whoami
-ls -ld /var/lib/postgresql/
+ls -ld /var/lib/postgresql/data
 
-SSL_DIR="/var/lib/postgresql/certs"
-mkdir -p "$SSL_DIR"
+SSL_DIR="/var/lib/postgresql/data/certs"
+
+# Use sudo to create the directory as root
+sudo mkdir -p "$SSL_DIR"
+
+# Use sudo to change ownership as root
+sudo chown postgres:postgres "$SSL_DIR"
 
 # Check if certificates already exist
 if [ ! -f "$SSL_DIR/server.key" ] || [ ! -f "$SSL_DIR/server.crt" ] || [ ! -f "$SSL_DIR/root.crt" ]; then
