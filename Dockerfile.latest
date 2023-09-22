@@ -6,12 +6,11 @@ RUN apt-get update && apt-get install -y openssl sudo sed
 # Allow the postgres user to execute certain commands as root without a password
 RUN echo "postgres ALL=(root) NOPASSWD: /usr/bin/mkdir, /bin/chown" > /etc/sudoers.d/postgres
 
-# Create a custom entrypoint script that replaces PGPORT
-RUN sed 's/^PGPORT=.*$/PGPORT=5432/' /usr/local/bin/docker-entrypoint.sh > /usr/local/bin/docker-entrypoint-custom.sh \
-    && chmod +x /usr/local/bin/docker-entrypoint-custom.sh
+# Copy your modified docker-entrypoint.sh script to the right location
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
-# Set the custom entrypoint script as the entrypoint
-ENTRYPOINT ["/usr/local/bin/docker-entrypoint-custom.sh"]
+# Make the modified script executable
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Add your init script
 COPY init-ssl.sh /docker-entrypoint-initdb.d/
