@@ -1,0 +1,35 @@
+name: Docker Image CI/CD
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        dockerfile: ['Dockerfile.latest', 'Dockerfile.15']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+
+      - name: Extract version from Dockerfile name
+        id: extract_version
+        run: |
+          version="${{ matrix.dockerfile }}"
+          version="${version#Dockerfile.}" # Remove "Dockerfile." prefix if it exists
+          echo "::set-output name=version::${version}"
+        shell: bash
+
+
+      - name: Build and Push Docker image
+        run: |
+          version="${{ steps.extract_version.outputs.version }}"
+          docker build -t ghcr.io/${{ github.repository }}/rw-postgres:${version} .
+          docker push ghcr.io/${{ github.repository }}/rw-postgres:${version}
+        working-directory: .
