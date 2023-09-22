@@ -15,3 +15,5 @@ COPY init-ssl.sh /docker-entrypoint-initdb.d/
 
 # Set permissions
 RUN chmod +x /docker-entrypoint-initdb.d/init-ssl.sh
+
+CMD ["postgres"]
