@@ -45,9 +45,10 @@ jobs:
         shell: bash
 
 
-      - name: Build
+      - name: Build and Publish
         uses: docker/build-push-action@v4
         with:
+          file: ${{ matrix.dockerfile }}
           platforms: linux/arm64, linux/amd64
           push: true
           tags: ghcr.io/${{ github.repository }}:${{ steps.extract_version.outputs.version }}
