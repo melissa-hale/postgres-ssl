@@ -36,6 +36,6 @@ jobs:
           pwd
           ls
           version="${{ steps.extract_version.outputs.version }}"
-          docker build -f "${{ matrix.dockerfile }}" -t ghcr.io/${{ github.repository }}/postgres-ssl:${version} .
-          docker push ghcr.io/${{ github.repository }}/postgres-ssl:${version}
+          docker build -f "${{ matrix.dockerfile }}" -t ghcr.io/${{ github.repository }}:${version} .
+          docker push ghcr.io/${{ github.repository }}:${version}
         working-directory: .
