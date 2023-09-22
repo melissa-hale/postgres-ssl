@@ -12,8 +12,8 @@ jobs:
         dockerfile: ['Dockerfile.latest', 'Dockerfile.15']
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout sources
+        uses: actions/checkout@v3
 
       - name: Login to GitHub Container Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
