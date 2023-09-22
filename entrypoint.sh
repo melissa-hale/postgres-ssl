@@ -8,4 +8,4 @@ export PGPORT=5432
 exec /usr/local/bin/docker-entrypoint.sh "$@"
 
 # Set PGPORT to Proxy Port
-export PGPORT=$TCP_PROXY_PORT
+export PGPORT=$RAILWAY_TCP_PROXY_PORT
