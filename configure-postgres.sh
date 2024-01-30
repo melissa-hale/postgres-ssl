@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-# Set default values for environment variables if they are not set
-: ${POSTGRES_MAX_CONNECTIONS:=150}
+# Set default values for config options
+: ${POSTGRES_MAX_CONNECTIONS:=100}
 : ${POSTGRES_SHARED_BUFFERS:="128MB"}
 : ${CONNECTION_CHECK_INTERVAL:=0}
 
