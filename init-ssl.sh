@@ -18,7 +18,7 @@ if [ ! -f "$SSL_DIR/server.key" ] || [ ! -f "$SSL_DIR/server.crt" ] || [ ! -f "$
 
     # Generate Server Certificates
     openssl req -new -nodes -text -out "$SSL_DIR/server.csr" -keyout "$SSL_DIR/server.key" -subj "/CN=localhost"
-    openssl x509 -req -in "$SSL_DIR/server.csr" -text -out "$SSL_DIR/server.crt" -CA "$SSL_DIR/root.crt" -CAkey "$SSL_DIR/root.key" -CAcreateserial
+    openssl x509 -req -in "$SSL_DIR/server.csr" -text -extfile "$SSL_DIR/server_cert_ext.conf" -extensions v3_server_cert -out "$SSL_DIR/server.crt" -CA "$SSL_DIR/root.crt" -CAkey "$SSL_DIR/root.key" -CAcreateserial -days "${SSL_CERT_DAYS:-820}"
 
     chown postgres:postgres "$SSL_DIR/server.key"
     chmod 600 "$SSL_DIR/server.key"
