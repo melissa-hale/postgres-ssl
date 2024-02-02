@@ -1,4 +1,4 @@
-name: Docker Image CI/CD for number versions
+name: Docker Image CI/CD
 
 on:
   workflow_dispatch:
