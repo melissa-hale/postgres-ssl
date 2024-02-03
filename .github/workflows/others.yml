@@ -39,10 +39,31 @@ jobs:
         id: prepare_dockerfile
         run: |
           version=${{ matrix.version }}
-          cp Dockerfile.template Dockerfile.$version
-          sed -i 's/{{version}}/'"$version"'/g' Dockerfile.$version
-          echo "::set-output name=dockerfile_path::Dockerfile.$version"
+          template_path="${GITHUB_WORKSPACE}/Dockerfile.template"
+          dockerfile_path="${GITHUB_WORKSPACE}/Dockerfile.${version}"
+            
+          # Ensure the template exists
+          if [[ ! -f "$template_path" ]]; then
+            echo "Dockerfile template does not exist at ${template_path}"
+            exit 1
+          fi
+        
+          # Copy and modify the Dockerfile
+          cp "$template_path" "$dockerfile_path"
+          sed -i "s/{{version}}/${version}/g" "$dockerfile_path"
+            
+          # Debug: List the directory contents
+          ls -lah "${GITHUB_WORKSPACE}"
+            
+          # Ensure the Dockerfile was created
+          if [[ ! -f "$dockerfile_path" ]]; then
+            echo "Modified Dockerfile does not exist at ${dockerfile_path}"
+            exit 1
+          fi
+        
+          echo "::set-output name=dockerfile_path::Dockerfile.${version}"
         shell: bash
+        
 
       - name: Build and Publish
         uses: docker/build-push-action@v4
