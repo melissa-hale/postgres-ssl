@@ -68,6 +68,7 @@ jobs:
       - name: Build and Publish
         uses: docker/build-push-action@v4
         with:
+          context: .
           file: ${{ steps.prepare_dockerfile.outputs.dockerfile_path }}
           platforms: linux/arm64, linux/amd64
           push: true
