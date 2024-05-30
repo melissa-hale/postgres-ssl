@@ -10,7 +10,7 @@ sudo mkdir -p "$SSL_DIR"
 sudo chown postgres:postgres "$SSL_DIR"
 
 # Check if certificates already exist
-if [ ! -f "$SSL_DIR/server.key" ] || [ ! -f "$SSL_DIR/server.crt" ] || [ ! -f "$SSL_DIR/root.crt" ]; then
+if [ "$REGENERATE_CERTS" = "true" ] || [ ! -f "$SSL_DIR/server.key" ] || [ ! -f "$SSL_DIR/server.crt" ] || [ ! -f "$SSL_DIR/root.crt" ]; then
     # Generate Root CA
     openssl req \
         -new -x509 -days "${SSL_CERT_DAYS:-820}" -nodes -text -out "$SSL_DIR/root.crt" \
