@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y openssl sudo
 RUN echo "postgres ALL=(root) NOPASSWD: /usr/bin/mkdir, /bin/chown" > /etc/sudoers.d/postgres
 
 # Add scripts
-COPY init-ssl.sh /docker-entrypoint-initdb.d/
+COPY init-ssl.sh /usr/local/bin/init-ssl.sh
 # COPY configure-postgres.sh /docker-entrypoint-initdb.d/
 COPY wrapper.sh /usr/local/bin/wrapper.sh
 
@@ -15,7 +15,7 @@ COPY wrapper.sh /usr/local/bin/wrapper.sh
 COPY ssl-extensions.conf /etc/ssl/certs/
 
 # Set permissions
-RUN chmod +x /docker-entrypoint-initdb.d/init-ssl.sh
+RUN chmod +x /usr/local/bin/init-ssl.sh
 # RUN chmod +x /docker-entrypoint-initdb.d/configure-postgres.sh
 RUN chmod +x /usr/local/bin/wrapper.sh
 
