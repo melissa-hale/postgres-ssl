@@ -2,7 +2,7 @@
 
 # Ensure necessary environment variables are available
 SSL_DIR="/var/lib/postgresql/data/certs"
-INIT_SSL_SCRIPT="/docker-entrypoint-initdb.d/init-ssl.sh"
+INIT_SSL_SCRIPT="/usr/local/bin/init-ssl.sh"
 
 # Check if certificates need to be regenerated
 if [ "$REGENERATE_CERTS" = "true" ] || [ ! -f "$SSL_DIR/server.key" ] || [ ! -f "$SSL_DIR/server.crt" ] || [ ! -f "$SSL_DIR/root.crt" ]; then
